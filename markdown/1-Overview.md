@@ -85,6 +85,10 @@ for(String weekday : list){//enhanced for statement
 }
 ```
 
+# 源代码
+JDK安装目录下的src.zip包含了Java core API的源代码，本文采用的是JDK 1.7u79的源码，[下载地址](http://download.oracle.com/otn-pub/java/jdk/7u79-b15/jdk-7u79-linux-i586.tar.gz)。[这里复制了一份]()。
+
+
 # 参考文献
 - [Collections Framework Overview](http://docs.oracle.com/javase/6/docs/technotes/guides/collections/overview.html)
 - [The For-Each Loop](http://docs.oracle.com/javase/1.5.0/docs/guide/language/foreach.html)
