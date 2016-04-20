@@ -1,6 +1,6 @@
 # 概览
 
-容器，就是可以容纳其他Java对象的对象。*Java Collections Frameword（JCF）*为Java开发者提供了通用的容器，其始于JDK 1.2，优点是：
+容器，就是可以容纳其他Java对象的对象。*Java Collections Framework（JCF）*为Java开发者提供了通用的容器，其始于JDK 1.2，优点是：
 
 - 降低编程难度
 - 提高程序性能
