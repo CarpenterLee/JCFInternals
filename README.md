@@ -13,9 +13,9 @@
 本系列文章主要从**数据结构和算法**层面分析JCF中List, Set, Map等典型容器，并不特意介绍Java的语言特性。具体内容如下：
 
 1. [Overview](https://github.com/CarpenterLee/JCFInternals/blob/master/markdown/1-Overview.md)
-2. ArrayList
-3. LinkedList
+2. [ArrayList](https://github.com/CarpenterLee/JCFInternals/blob/master/markdown/2-ArrayList.md)
+3. [LinkedList](https://github.com/CarpenterLee/JCFInternals/blob/master/markdown/3-LinkedList.md)
 4. Stack and Queue
-5. TreeSet and TreeMap
+5. [TreeSet and TreeMap](https://github.com/CarpenterLee/JCFInternals/blob/master/markdown/6-HashSet%20and%20HashMap.md)
 6. HashSet and HashMap
 7. LinkedHashSet and LinkedHashMap

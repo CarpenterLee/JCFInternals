@@ -85,7 +85,7 @@ final Entry<K,V> removeEntryForKey(Object key) {
 
 # HashSet
 
-前面已经说过*HashSet*是对*HashMap*的简单包装，对*HashSet*的函数调用都会转换成合适的*HashMap*方法，因此*HashSet*的实现非常简单，只有不到300行代码。
+前面已经说过*HashSet*是对*HashMap*的简单包装，对*HashSet*的函数调用都会转换成合适的*HashMap*方法，因此*HashSet*的实现非常简单，只有不到300行代码。这里不再赘述。
 ```Java
 //HashSet是对HashMap的简单包装
 public class HashSet<E>
