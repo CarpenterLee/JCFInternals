@@ -47,15 +47,15 @@ Java里有一个叫做*Stack*的类，却没有叫做*Queue*的类（它是个�
 
 ![ArrayDeque_addFirst.png](../PNGFigures/ArrayDeque_addFirst.png)
 
-实际需要考虑空间是否够用，以及下标是否越界的问题。上图中，如果`head`为`0`之后接着调用`addFirst()`，虽然空余空间还够用，但`head`为`-1`，下标越界了。下列代码很好的解决了这两个问题。
+实际需要考虑：1.空间是否够用，以及2.下标是否越界的问题。上图中，如果`head`为`0`之后接着调用`addFirst()`，虽然空余空间还够用，但`head`为`-1`，下标越界了。下列代码很好的解决了这两个问题。
 ```Java
 //addFirst(E e)
 public void addFirst(E e) {
     if (e == null)//不允许放入null
         throw new NullPointerException();
-    elements[head = (head - 1) & (elements.length - 1)] = e;//赋值
-    if (head == tail)//空间用光了，扩容
-        doubleCapacity();
+    elements[head = (head - 1) & (elements.length - 1)] = e;//2.下标是否越界
+    if (head == tail)//1.空间是否够用
+        doubleCapacity();//扩容
 }
 ```
 
@@ -99,8 +99,8 @@ public void addLast(E e) {
     if (e == null)//不允许放入null
         throw new NullPointerException();
     elements[tail] = e;//赋值
-    if ( (tail = (tail + 1) & (elements.length - 1)) == head)//空间用光了，扩容
-        doubleCapacity();
+    if ( (tail = (tail + 1) & (elements.length - 1)) == head)//下标越界处理
+        doubleCapacity();//扩容
 }
 ```
 
