@@ -1,8 +1,8 @@
 # Java Collections Framework Internals
 ## Authors
-| Weibo Id | Name |
-|:-----------|:-------------|
-|[@计算所的小鼠标](http://weibo.com/icttinymouse) | Hao Li |
+| Name | Weibo Id | Mail|
+|:-----------|:-------------|:-------------|
+| 李豪 |[@计算所的小鼠标](http://weibo.com/icttinymouse) | hooleeucas@163.com |
 
 ## Introduction
 
