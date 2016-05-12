@@ -19,3 +19,4 @@
 5. TreeSet and TreeMap
 6. [HashSet and HashMap](https://github.com/CarpenterLee/JCFInternals/blob/master/markdown/6-HashSet%20and%20HashMap.md)
 7. LinkedHashSet and LinkedHashMap
+8. [PriorityQueue](https://github.com/CarpenterLee/JCFInternals/blob/master/markdown/8-PriorityQueue.md)
