@@ -2,9 +2,9 @@
 
 # 总体介绍
 
-前面以Java *ArrayDeque*为代表讲解了*Stack*和*Queue*，其实还有一种特殊的队列叫做*PriorityQueue*，即优先队列。**优先队列的作用是能保证每次取出的元素都是队列中权值最小的**（Java的优先队列每次取最小元素，C\++的优先队列每次取最大元素）。这里牵涉到了大小关系，**元素大小的评判可以通过元素本身的自然顺序（*natural ordering*），也可以通过构造时传入的比较器**（*Comparator*，类似于C\++的仿函数）。
+前面以Java *ArrayDeque*为例讲解了*Stack*和*Queue*，其实还有一种特殊的队列叫做*PriorityQueue*，即优先队列。**优先队列的作用是能保证每次取出的元素都是队列中权值最小的**（Java的优先队列每次取最小元素，C\++的优先队列每次取最大元素）。这里牵涉到了大小关系，**元素大小的评判可以通过元素本身的自然顺序（*natural ordering*），也可以通过构造时传入的比较器**（*Comparator*，类似于C\++的仿函数）。
 
-Java中*PriorityQueue*实现了*Queue*接口，不允许翻入`null`元素；其通过堆实现，具体说是通过完全二叉树（*complete binary tree*）实现的**小顶堆**（任意一个非叶子节点的权值，都不大于其左右子节点的权值），也就意味着可以通过数组来作为*PriorityQueue*的底层实现。
+Java中*PriorityQueue*实现了*Queue*接口，不允许放入`null`元素；其通过堆实现，具体说是通过完全二叉树（*complete binary tree*）实现的**小顶堆**（任意一个非叶子节点的权值，都不大于其左右子节点的权值），也就意味着可以通过数组来作为*PriorityQueue*的底层实现。
 
 ![PriorityQueue_base.png](../PNGFigures/PriorityQueue_base.png)
 
@@ -129,11 +129,7 @@ private void siftDown(int k, E x) {
 
 ## remove(Object o)
 
-`remove(Object o)`方法用于删除队列中跟`o`相等的某一个元素（如果有多个相等，只删除一个），该方法不是`Queue`接口内的方法，而是`Collection`接口的方法。由于删除操作会改变队列结构，所以要进行调整；又由于删除元素的位置可能是任意的，所以调整过程比其它函数稍加繁琐。具体来说，`remove(Object o)`可以分为2种情况：
-1. 删除的是最后一个元素。直接删除即可，不需要调整。
-2. 删除的不是最后一个元素。。
-
-此处不再赘述。
+`remove(Object o)`方法用于删除队列中跟`o`相等的某一个元素（如果有多个相等，只删除一个），该方法不是*Queue*接口内的方法，而是*Collection*接口的方法。由于删除操作会改变队列结构，所以要进行调整；又由于删除元素的位置可能是任意的，所以调整过程比其它函数稍加繁琐。具体来说，`remove(Object o)`可以分为2种情况：1. 删除的是最后一个元素。直接删除即可，不需要调整。2. 删除的不是最后一个元素。此处不再赘述。
 
 ![PriorityQueue_remove2.png](../PNGFigures/PriorityQueue_remove2.png)
 
