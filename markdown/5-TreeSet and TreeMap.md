@@ -316,7 +316,7 @@ private void fixAfterDeletion(Entry<K,V> x) {
 
 # TreeSet
 
-前面已经说过`TreeSet`是对`TeeMap`的简单包装，对`TreeSet`的函数调用都会转换成合适的`TeeMap`方法，因此`TreeSet`的实现非常简单。这里不再赘述。
+前面已经说过`TreeSet`是对`TreeMap`的简单包装，对`TreeSet`的函数调用都会转换成合适的`TreeMap`方法，因此`TreeSet`的实现非常简单。这里不再赘述。
 
 ```Java
 // TreeSet是对TreeMap的简单包装
@@ -337,14 +337,3 @@ public class TreeSet<E> extends AbstractSet<E>
     ......
 }
 ```
-
-
-
-
-
-
-
-
-
-
-
