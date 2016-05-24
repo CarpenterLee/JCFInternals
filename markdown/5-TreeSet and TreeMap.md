@@ -195,11 +195,149 @@ private void fixAfterInsertion(Entry<K,V> x) {
 
 `remove(Object key)`的作用是删除`key`值对应的`entry`，该方法首先通过上文中提到的`getEntry(Object key)`方法找到`key`值对应的`entry`，然后调用`deleteEntry(Entry<K,V> entry)`删除对应的`entry`。由于删除操作会改变红黑树的结构，有可能破坏红黑树的约束条件，因此有可能要进行调整。
 
-（TODO：remove(Object key)和调整过程图解）
+`getEntry()`函数前面已经讲解过，这里重点放`deleteEntry()`上，该函数删除指定的`entry`并在红黑树的约束被破坏时进行调用`fixAfterDeletion(Entry<K,V> x)`进行调整。
 
-`getEntry()`函数前面已经讲解过，这里重点放在`deleteEntry()`上。
+**由于红黑树是一棵增强版的二叉查找树，红黑树的删除操作跟普通二叉查找树的删除操作也就非常相似，唯一的区别是红黑树在节点删除之后可能需要进行调整**。现在考虑一棵普通二叉查找树的删除过程，可以简单分为两种情况：
 
-（TODO：deleteEntry()和fixAfterDeletion()讲解）
+> 1. 删除点p的左右子树都为空，或者只有一棵子树非空。
+> 2. 删除点p的左右子树都非空。
+
+对于上述情况1，处理起来比较简单，直接将p删除（左右子树都为空时），或者用非空子树替代p（只有一棵子树非空时）；对于情况2，可以用p的后继s（树中大于x的最小的那个元素）代替p，然后使用情况1删除s（此时s一定满足情况1.可以画画看）。
+
+基于以上逻辑，红黑树的节点删除函数`deleteEntry()`代码如下：
+
+```Java
+// 红黑树entry删除函数deleteEntry()
+private void deleteEntry(Entry<K,V> p) {
+    modCount++;
+    size--;
+    if (p.left != null && p.right != null) {// 2. 删除点p的左右子树都非空。
+        Entry<K,V> s = successor(p);// 后继
+        p.key = s.key;
+        p.value = s.value;
+        p = s;
+    }
+    Entry<K,V> replacement = (p.left != null ? p.left : p.right);
+    if (replacement != null) {// 1. 删除点p只有一棵子树非空。
+        replacement.parent = p.parent;
+        if (p.parent == null)
+            root = replacement;
+        else if (p == p.parent.left)
+            p.parent.left  = replacement;
+        else
+            p.parent.right = replacement;
+        p.left = p.right = p.parent = null;
+        if (p.color == BLACK)
+            fixAfterDeletion(replacement);// 调整
+    } else if (p.parent == null) {
+        root = null;
+    } else { // 1. 删除点p的左右子树都为空
+        if (p.color == BLACK)
+            fixAfterDeletion(p);// 调整
+        if (p.parent != null) {
+            if (p == p.parent.left)
+                p.parent.left = null;
+            else if (p == p.parent.right)
+                p.parent.right = null;
+            p.parent = null;
+        }
+    }
+}
+```
+
+上述代码中占据大量代码行的，是用来修改父子节点间引用关系的代码，其逻辑并不难理解。下面着重讲解删除后调整函数`fixAfterDeletion()`。首先请思考一下，删除了哪些点才会导致调整？**只有删除点是BLACK的时候，才会触发调整函数**，因为删除RED节点不会破坏红黑树的任何约束，而删除BLACK节点会破坏规则4。
+
+跟上文中讲过的`fixAfterInsertion()`函数一样，这里也要分成若干种情况。记住，**无论有多少情况，具体的调整操作只有两种：1.改变某些节点的颜色，2.对某些节点进行旋转。**
+
+![TreeMap_fixAfterDeletion.png](../PNGFigures/TreeMap_fixAfterDeletion.png)
+
+上述图解的总体思想是：将情况1首先转换成情况2，或者转换成情况3和情况4。当然，该图解并不意味着调整过程一定是从情况1开始。通过后续代码我们还会发现几个有趣的规则：a).如果是由情况1之后紧接着进入的情况2，那么情况2之后一定会退出循环（因为x为红色）；b).一旦进入情况3和情况4，一定会退出循环（因为x为root）。
+
+删除后调整函数`fixAfterDeletion()`的具体代码如下，其中用到了上文中提到的`rotateLeft()`和`rotateRight()`函数。通过代码我们能够看到，情况3其实是落在情况4内的。情况5～情况8跟前四种情况是对称的，因此图解中并没有画出后四种情况，读者可以参考代码自行理解。
+
+```Java
+private void fixAfterDeletion(Entry<K,V> x) {
+    while (x != root && colorOf(x) == BLACK) {
+        if (x == leftOf(parentOf(x))) {
+            Entry<K,V> sib = rightOf(parentOf(x));
+            if (colorOf(sib) == RED) {
+                setColor(sib, BLACK);                   // 情况1
+                setColor(parentOf(x), RED);             // 情况1
+                rotateLeft(parentOf(x));                // 情况1
+                sib = rightOf(parentOf(x));             // 情况1
+            }
+            if (colorOf(leftOf(sib))  == BLACK &&
+                colorOf(rightOf(sib)) == BLACK) {
+                setColor(sib, RED);                     // 情况2
+                x = parentOf(x);                        // 情况2
+            } else {
+                if (colorOf(rightOf(sib)) == BLACK) {
+                    setColor(leftOf(sib), BLACK);       // 情况3
+                    setColor(sib, RED);                 // 情况3
+                    rotateRight(sib);                   // 情况3
+                    sib = rightOf(parentOf(x));         // 情况3
+                }
+                setColor(sib, colorOf(parentOf(x)));    // 情况4
+                setColor(parentOf(x), BLACK);           // 情况4
+                setColor(rightOf(sib), BLACK);          // 情况4
+                rotateLeft(parentOf(x));                // 情况4
+                x = root;                               // 情况4
+            }
+        } else { // 跟前四种情况对称
+            Entry<K,V> sib = leftOf(parentOf(x));
+            if (colorOf(sib) == RED) {
+                setColor(sib, BLACK);                   // 情况5
+                setColor(parentOf(x), RED);             // 情况5
+                rotateRight(parentOf(x));               // 情况5
+                sib = leftOf(parentOf(x));              // 情况5
+            }
+            if (colorOf(rightOf(sib)) == BLACK &&
+                colorOf(leftOf(sib)) == BLACK) {
+                setColor(sib, RED);                     // 情况6
+                x = parentOf(x);                        // 情况6
+            } else {
+                if (colorOf(leftOf(sib)) == BLACK) {
+                    setColor(rightOf(sib), BLACK);      // 情况7
+                    setColor(sib, RED);                 // 情况7
+                    rotateLeft(sib);                    // 情况7
+                    sib = leftOf(parentOf(x));          // 情况7
+                }
+                setColor(sib, colorOf(parentOf(x)));    // 情况8
+                setColor(parentOf(x), BLACK);           // 情况8
+                setColor(leftOf(sib), BLACK);           // 情况8
+                rotateRight(parentOf(x));               // 情况8
+                x = root;                               // 情况8
+            }
+        }
+    }
+    setColor(x, BLACK);
+}
+```
+
+# TreeSet
+
+前面已经说过`TreeSet`是对`TeeMap`的简单包装，对`TreeSet`的函数调用都会转换成合适的`TeeMap`方法，因此`TreeSet`的实现非常简单。这里不再赘述。
+
+```Java
+// TreeSet是对TreeMap的简单包装
+public class TreeSet<E> extends AbstractSet<E>
+    implements NavigableSet<E>, Cloneable, java.io.Serializable
+{
+	......
+    private transient NavigableMap<E,Object> m;
+    // Dummy value to associate with an Object in the backing Map
+    private static final Object PRESENT = new Object();
+    public TreeSet() {
+        this.m = new TreeMap<E,Object>();// TreeSet里面有一个TreeMap
+    }
+    ......
+    public boolean add(E e) {
+        return m.put(e, PRESENT)==null;
+    }
+    ......
+}
+```
+
 
 
 
