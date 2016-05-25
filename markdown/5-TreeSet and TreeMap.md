@@ -83,6 +83,42 @@ private void rotateRight(Entry<K,V> p) {
 }
 ```
 
+## 寻找节点后继
+
+对于一棵二叉查找树，给定节点t，其后继（树种比大于t的最小的那个元素）可以通过如下方式找到：
+
+> 1. t的右子树不空，则t的后继是其右子树中最小的那个元素。
+> 2. t的右孩子为空，则t的后继是其第一个向左走的祖先。
+
+后继节点在红黑树的删除操作中将会用到。
+
+
+![TreeMap_successor.png](../PNGFigures/TreeMap_successor.png)
+
+*TreeMap*中寻找节点后继的代码如下：
+
+```Java
+// 寻找节点后继函数successor()
+static <K,V> TreeMap.Entry<K,V> successor(Entry<K,V> t) {
+    if (t == null)
+        return null;
+    else if (t.right != null) {// 1. t的右子树不空，则t的后继是其右子树中最小的那个元素
+        Entry<K,V> p = t.right;
+        while (p.left != null)
+            p = p.left;
+        return p;
+    } else {// 2. t的右孩子为空，则t的后继是其第一个向左走的祖先
+        Entry<K,V> p = t.parent;
+        Entry<K,V> ch = t;
+        while (p != null && ch == p.right) {
+            ch = p;
+            p = p.parent;
+        }
+        return p;
+    }
+}
+```
+
 # 方法剖析
 
 ## get()
