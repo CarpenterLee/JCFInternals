@@ -4,7 +4,7 @@
 
 如果你已看过前面关于*HashSet*和*HashMap*，以及*TreeSet*和*TreeMap*的讲解，一定能够想到本文将要讲解的*LinkedHashSet*和*LinkedHashMap*其实也是一回事。*LinkedHashSet*和*LinkedHashMap*在Java里也有着相同的实现，前者仅仅是对后者做了一层包装，也就是说***LinkedHashSet*里面有一个*LinkedHashMap*（适配器模式）**。因此本文将重点分析*LinkedHashMap*。
 
-*LinkedHashMap*实现了*Map*接口，即允许放入`key`为`null`的元素，也允许插入`value`为`null`的元素。从名字上可以看出该容器是*linked list*和*HashMap*的混合体，也就是说它同时满足*HashMap*和*linked list*的某些特性。**可将*LinkedHashMap*看作采用*linked list*增强的*HashMap***。
+*LinkedHashMap*实现了*Map*接口，即允许放入`key`为`null`的元素，也允许插入`value`为`null`的元素。从名字上可以看出该容器是*linked list*和*HashMap*的混合体，也就是说它同时满足*HashMap*和*linked list*的某些特性。**可将*LinkedHashMap*看作采用*linked list*增强的*HashMap*。**
 
 ![LinkedHashMap_base.png](../PNGFigures/LinkedHashMap_base.png)
 
