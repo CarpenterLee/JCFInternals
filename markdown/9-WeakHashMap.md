@@ -79,7 +79,7 @@ private static class SetFromMap<E> extends AbstractSet<E>
 
 至此*Java Collections Framework Internals*系列已经全部讲解完毕，希望这几篇简短的博文能够帮助各位读者对Java容器框架建立基本的理解。通过这里可以返回[本系列文章目录](https://github.com/CarpenterLee/JCFInternals/blob/master/markdown/0-Introduction.md)
 
-如果对各位有哪怕些微的帮助，博主将感到非常高兴！
+如果对各位有哪怕些微的帮助，博主将感到非常高兴！如果博文中有任何的纰漏和谬误，欢迎各位博友们指正。
 
 
 
