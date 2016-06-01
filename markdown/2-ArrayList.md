@@ -40,7 +40,7 @@ public E get(int index) {
 ```java
 private void grow(int minCapacity) {
     int oldCapacity = elementData.length;
-    int newCapacity = oldCapacity + (oldCapacity >> 1);//原来的3倍
+    int newCapacity = oldCapacity + (oldCapacity >> 1);//原来的1.5倍
     if (newCapacity - minCapacity < 0)
         newCapacity = minCapacity;
     if (newCapacity - MAX_ARRAY_SIZE > 0)
