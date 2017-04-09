@@ -139,9 +139,25 @@ public class LinkedHashSet<E>
 }
 ```
 
+# LinkedHashMap经典用法
 
+*LinkedHashMap*除了可以保证迭代顺序外，还有一个很有用的用法：可以轻松实现一个采用了FIFO替换策略的缓存。具体说来，LinkedHashMap有一个子类方法`protected boolean removeEldestEntry(Map.Entry<K,V> eldest)`，该方法的作用是告诉Map是否要删除“最老”的Entry，所谓最老就是当前Map中最早插入的Entry，如果该方法返回`true`，最老的那个元素就会被删除。在每次插入新元素的之后LinkedHashMap会自动询问removeEldestEntry()是否要删除最老的元素。这样只需要在子类中重载该方法，当元素个数超过一定数量时让removeEldestEntry()返回true，就能够实现一个使用FIFO策略固定大小的缓存。示例代码如下：
 
-
+```Java
+/** 一个固定大小的FIFO替换策略的缓存 */
+class FIFOCache<K, V> extends LinkedHashMap<K, V>{
+	private final int cacheSize;
+	public FIFOCache(int cacheSize){
+    	this.cacheSize = cacheSize; 
+    }
+    
+	// 当Entry个数超过cacheSize时，删除最老的Entry
+    @Override
+    protected boolean removeEldestEntry(Map.Entry<K,V> eldest) {
+       return size() > cacheSize;
+    }
+}
+```
 
 
 
