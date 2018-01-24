@@ -48,7 +48,7 @@ public boolean add(E e) {
 }
 ```
 
-`add(int index, E element)`的逻辑稍显复杂，可以分成两部，1.先根据index找到要插入的位置；2.修改引用，完成插入操作。
+`add(int index, E element)`的逻辑稍显复杂，可以分成两部分，1.先根据index找到要插入的位置；2.修改引用，完成插入操作。
 
 ```Java
 //add(int index, E element)
