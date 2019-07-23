@@ -52,23 +52,23 @@ public boolean add(E e) {
 
 ```Java
 //add(int index, E element)
-public void add(int index, E element) {
-	checkPositionIndex(index);//index >= 0 && index <= size;
-	if (index == size)//插入位置是末尾，包括列表为空的情况
-        add(element);
-    else{
-    	Node<E> succ = node(index);//1.先根据index找到要插入的位置
-        //2.修改引用，完成插入操作。
-        final Node<E> pred = succ.prev;
-        final Node<E> newNode = new Node<>(pred, e, succ);
-        succ.prev = newNode;
-        if (pred == null)//插入位置为0
-            first = newNode;
-        else
-            pred.next = newNode;
-        size++;
+ public void add(int index, E element) {
+        checkPositionIndex(index);//index >= 0 && index <= size;
+        if (index == size)//插入位置是末尾，包括列表为空的情况
+            add(element);
+        else {
+            Node<E> succ = node(index);//1.先根据index找到要插入的位置
+            //2.修改引用，完成插入操作。
+            final Node<E> pred = succ.prev;
+            final Node<E> newNode = new Node<>(pred, e, succ);
+            succ.prev = newNode;
+            if (pred == null)//插入位置为0
+                first = newNode;
+            else
+                pred.next = newNode;
+            size++;
+        }
     }
-}
 ```
 
 上面代码中的`node(int index)`函数有一点小小的trick，因为链表双向的，可以从开始往后找，也可以从结尾往前找，具体朝那个方向找取决于条件`index < (size >> 1)`，也即是index是靠近前端还是后端。
