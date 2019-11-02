@@ -14,7 +14,7 @@ Java *TreeMap*实现了*SortedMap*接口，也就是说会按照`key`的大小�
 
 `SortedMap m = Collections.synchronizedSortedMap(new TreeMap(...));`
 
-**红黑树是一种近似平衡的二叉查找树，它能够确保任何一个节点的左右子树的高度差不会超过二者中较低那个的一陪**。具体来说，红黑树是满足如下条件的二叉查找树（binary search tree）：
+**红黑树是一种近似平衡的二叉查找树，它能够确保任何一个节点的左右子树的高度差不会超过二者中较低那个的一倍**。具体来说，红黑树是满足如下条件的二叉查找树（binary search tree）：
 
 1. 每个节点要么是红色，要么是黑色。
 2. 根节点必须是黑色
