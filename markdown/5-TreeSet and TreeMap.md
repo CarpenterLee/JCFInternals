@@ -2,7 +2,7 @@
 
 # 总体介绍
 
-之所以把*TreeSet*和*TreeMap*放在一起讲解，是因为二者在Java里有着相同的实现，前者仅仅是对后者做了一层包装，也就是说***TreeSet*里面有一个*TreeMap*（适配器模式）**。因此本文将重点分析*TreeMap*。
+之所以把*TreeSet*和*TreeMap*放在一起讲解，是因为二者在Java里有着相同的实现，前者仅仅是对后者做了一层包装，也就是说 **TreeSet** 里面有一个 **TreeMap（适配器模式）** 。因此本文将重点分析*TreeMap*。
 
 Java *TreeMap*实现了*SortedMap*接口，也就是说会按照`key`的大小顺序对*Map*中的元素进行排序，`key`大小的评判可以通过其本身的自然顺序（natural ordering），也可以通过构造时传入的比较器（Comparator）。
 
